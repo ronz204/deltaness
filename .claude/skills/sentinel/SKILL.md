@@ -42,20 +42,24 @@ For each claim:
   - If this kind of check is going to recur for a slice, say so and suggest the user have `archivist` create a dedicated subagent for it (via its own `agents.template.md`) instead of re-paying full inline cost every time.
 - **Never guess a verdict.** If what was actually read doesn't clearly confirm or contradict a claim, the verdict is `Unverified`, not a best guess in either direction.
 
+**When scope spans more than one slice** (a named multi-slice check or a full sweep), do one additional pass after verifying each slice's own claims: compare the Invariants (and, for `design.md`, Interactions/Consumes) already read across those slices — free, since the content is already loaded, no extra reads — for a direct contradiction between two slices' own stated claims on the same domain object. Report only an actual stated contradiction, never an inferred or weak overlap; that becomes a `Conflict` verdict in Step 3.
+
 ## Step 3 — Report, don't fix
 
 Report as a compact table, not prose per finding — a verbose report defeats a cost-conscious skill:
 
 | Slice | Source | Claim | Verdict | Evidence |
 |---|---|---|---|---|
-| `<slice>` | spec / design / plan | `<the claim, restated short>` | Holds / Violated / Stale / Unverified | `<what was actually checked — the pattern found or not found>` |
+| `<slice>` | spec / design / plan | `<the claim, restated short>` | Holds / Violated / Stale / Unverified / Gone / Conflict | `<what was actually checked — the pattern found or not found>` |
 
 - **Holds** — confirmed true against the real implementation.
-- **Violated** — confirmed false; the implementation contradicts the claim.
+- **Violated** — confirmed false; the implementation exists and contradicts the claim.
 - **Stale** — plan-only: the step's status doesn't match what's actually in the code.
 - **Unverified** — couldn't be confirmed either way from what was read; say why.
+- **Gone** — the implementation the claim described no longer exists at all (the slice was intentionally retired). Distinct from `Violated`: there's nothing left to contradict, and it isn't a bug to fix.
+- **Conflict** — only possible when scope spans more than one slice: two slices' own claims directly contradict each other on the same domain object. The `Slice` column names both slices for this row instead of one.
 
-Lead with anything `Violated` or `Stale` — a clean bill of health is the least interesting part of the report.
+Lead with anything `Violated`, `Stale`, `Gone`, or `Conflict` — a clean bill of health is the least interesting part of the report.
 
 ## Step 4 — Hand off, don't resolve silently
 
@@ -63,6 +67,8 @@ This skill's job ends at the report. What happens next depends on which side is 
 
 - **If the code is wrong** (implementation drifted from a still-desired invariant or design claim), that's a bug — say so plainly, don't touch the code.
 - **If the spec/design/plan is wrong** (the invariant or design claim no longer applies, or a step's real status differs from what's recorded), hand off to `archivist` to correct the file in place — same as `specifier`'s Step 3, don't pick a side quietly, surface it and let the user confirm which one wins before anything gets edited. If the drift is a `design.md` claim restating something that actually belongs in `spec.md` (or vice versa), flag that shape problem too, not just the factual one.
+- **If the verdict is `Gone`** (the implementation is confirmed intentionally removed), hand off to `archivist` to delete the slice's `spec.md`/`design.md`/`plan.md` outright — not correct them, not archive them. This system keeps no history layer; git history is already the record of what the contract used to say.
+- **If the verdict is `Conflict`**, neither slice is automatically wrong — flag it for the user to decide whether the two slices should be reconciled (two slices whose contracts keep contradicting or changing together are often one bounded context, not two) or whether the overlap is intentional and one claim just needs its scope language tightened.
 
 ---
 
@@ -73,3 +79,4 @@ This skill's job ends at the report. What happens next depends on which side is 
 - Doesn't write or edit `spec.md`, `design.md`, `plan.md`, or source code — verification only, always handed off.
 - Doesn't sweep every slice in the project by default — see Step 0.
 - Doesn't force a Holds/Violated verdict when the evidence genuinely doesn't settle it — `Unverified` is a legitimate, honest outcome, not a failure to try harder.
+- Doesn't hunt for cross-slice conflicts when scope is a single slice — the `Conflict` check only runs as a free byproduct of a multi-slice sweep already in scope, never triggers pulling in extra slices or extra reads on its own.

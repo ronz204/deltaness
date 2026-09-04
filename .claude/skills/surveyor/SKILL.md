@@ -24,7 +24,7 @@ Unlike `specifier` (which goes deep on one slice) or `archivist`'s own Step 0 (d
 - The package manifest/build/task-runner config and CI config, for the real install/dev/test/build commands — never guess a command that "should" work.
 - The top-level directory tree, for what each major part is for.
 - Any existing README or doc, for stated purpose/vision — cross-check it against the actual code rather than trusting it as-is.
-- Enough of the codebase's shape to judge which `.claude/docs/*` categories from `archivist`'s own artifact table genuinely apply here (vision/overview, functional/module reference, topology/structure, static infrastructure) — skip a category outright if the project doesn't have that kind of content, rather than creating a thin placeholder file for it.
+- Enough of the codebase's shape to fill `archivist`'s six always-created `.claude/docs/*` categories — vision/overview, functional/module reference, topology/structure, persistence/database, mechanism/concept reference, build approach — each of which already exists as a shipped skeleton file and gets filled in place rather than skipped, even when the honest content for one of them is "not applicable here." Static infrastructure is the one conditional category from that same table — skip it outright if the project doesn't have that kind of content, rather than creating a thin placeholder file for it.
 - Natural bounded contexts visible in the repo's structure — note them as slice candidates for Step 4's report, don't investigate any one of them deeply; that depth is `specifier`'s job, later, on demand.
 - Cross-cutting conventions the codebase already follows consistently that aren't caught by a linter/type-checker/CI check — rule candidates, per `archivist`'s "Spotting a rule candidate" check (cross-cutting, not tool-enforced, applies every time, would be silently violated otherwise). Note them; don't write them yet, and don't mistake incidental consistency (only happens to look the same so far) for a deliberate convention.
 - Evidence relevant to `references/baseline-checklist.md` (auth middleware, input validation, caching, queues, rate limiting, pagination) — enough that Step 2's questions on this can be confirmations of what was found, not blind asks.
@@ -47,7 +47,8 @@ Same discipline as `specifier`: confirm from Step 1 where possible, ask where it
 Package the investigation and interview results and invoke `archivist` to write, in one batch:
 
 - `CLAUDE.md` via `references/mark.template.md` — project description, knowledge base layout, repo layout, setup/common commands, permissions summary, conventions.
-- Each warranted `.claude/docs/*.md` via `references/docs.template.md` — only the categories Step 1 actually found material for.
+- `overview.md`, `modules.md`, `structure.md`, `database.md`, `expertise.md`, and `approach.md` — these already exist as shipped skeletons under `.claude/docs/`; fill each in place with what Step 1/Step 2 found rather than creating a new file from `references/docs.template.md`. State "not applicable here" plainly in one of these rather than leaving it as an unfilled skeleton, on the rare project where it genuinely doesn't apply.
+- `infrastructure.md`, only if Step 1 found real material for it, via `references/docs.template.md` — the one docs category from that table that stays conditional.
 - Each rule candidate confirmed in Step 2, as its own `.claude/rules/<topic>.md` via `references/rules.template.md` — one file per concern, same as any other rule.
 
 This skill never writes any of these itself, same separation `specifier` keeps from `archivist` — it produces grounded material, `archivist` still does the write and still applies its own Step 0 discipline against what was found.
