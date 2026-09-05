@@ -2,7 +2,7 @@
 This file ships as part of the harness itself, as the fill-in skeleton for
 this doc category — copy it into a project as-is, then fill it in place
 when bootstrapping (surveyor) or updating (archivist) that project's build
-approach. Unlike infrastructure.md, this file is always created for a
+approach. Unlike structure.md, this file is always created for a
 bootstrapped project, even when the honest content is "not applicable here"
 (no meaningful build sequencing beyond "just build the thing") — state that
 explicitly rather than omitting the file. Unlike a slice's plan.md, this

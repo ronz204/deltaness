@@ -2,7 +2,7 @@
 This file ships as part of the harness itself, as the fill-in skeleton for
 this doc category — copy it into a project as-is, then fill it in place
 when bootstrapping (surveyor) or updating (archivist) that project's
-mechanism reference. Unlike infrastructure.md, this file is always created
+mechanism reference. Unlike structure.md, this file is always created
 for a bootstrapped project, even when the honest content is "not applicable
 here" (nothing here relies on a mechanism worth explaining) — state that
 explicitly rather than omitting the file. Delete these guidance comments

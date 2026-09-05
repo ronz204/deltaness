@@ -2,13 +2,13 @@
 This file ships as part of the harness itself, as the fill-in skeleton for
 this doc category — copy it into a project as-is, then fill it in place
 when bootstrapping (surveyor) or updating (archivist) that project's
-persistence reference. Unlike infrastructure.md, this file is always
+persistence reference. Unlike structure.md, this file is always
 created for a bootstrapped project, even when the honest content is "not
 applicable here" (no persistent store) — state that explicitly rather than
 omitting the file, same discipline surveyor's own baseline checklist uses
 for security/performance/scalability. Data model and database
 infrastructure are kept together here, deliberately, rather than split
-against structure.md or infrastructure.md. Delete these guidance comments
+against structure.md. Delete these guidance comments
 once every section holds real, grounded content. Ground every claim in the
 real schema/migrations/provisioning config (Step 0), never from memory or
 from what a similar stack usually looks like. Omit any section below that
