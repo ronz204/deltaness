@@ -25,6 +25,10 @@ real, grounded content. Ground every claim in the actual stack/config
 
 <!-- How the parts actually communicate — request flow, sync vs. async boundaries, what talks to what. Prefer a short structural breakdown or an ASCII diagram in a fenced code block over prose when the shape is spatial. -->
 
+## Infrastructure
+
+<!-- Static infrastructure/provisioning facts outside the persistence layer — hosting model, environments, provisioned resources (queues, caches, CDNs, compute) — and why each was provisioned that way. Persistence-layer infrastructure (the database's own engine/hosting/backup approach) lives in database.md instead, not here. Omit if the project genuinely has none of this (e.g. runs as a single local process). -->
+
 ## Cross-cutting patterns
 
 <!-- Patterns that apply across components rather than to one of them specifically — auth, background jobs, caching, rate limiting, error handling. State each pattern with its rationale, not just its mechanics. -->

@@ -20,7 +20,7 @@ claim in the actual codebase/README/stated intent, never assumption.
 
 ## Scope & non-goals
 
-<!-- What the project owns. Then explicit non-goals — a boundary that's easy to assume belongs here but deliberately doesn't. -->
+<!-- What the project owns. Then explicit non-goals — a boundary that's easy to assume belongs here but deliberately doesn't. This is the primary home for scope boundaries; the file's closing Non-goals section is only for a boundary that doesn't fit naturally here — don't split one boundary across both sections. -->
 
 ## Domain concepts
 
@@ -34,4 +34,4 @@ claim in the actual codebase/README/stated intent, never assumption.
 
 ## Non-goals
 
-<!-- Only include this section if a scope boundary here is easy to violate by accident. Omit entirely otherwise. -->
+<!-- Only for a boundary not already covered by Scope & non-goals above — never restate the same boundary in both places. Include only if such a boundary exists and is easy to violate by accident; omit entirely otherwise. -->

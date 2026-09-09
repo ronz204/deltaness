@@ -38,6 +38,10 @@ invent a phase or pillar that hasn't actually been agreed on.
 
 0. **`<phase name>`** — `<what this phase establishes and why it comes first/next>`
 
+## Risks
+
+<!-- Known risks to the roadmap actually landing as planned — an unresolved external dependency, an unvalidated scaling/performance assumption, a technology bet that might not pan out. Not a generic risk register: only a risk specific and real to this roadmap. Omit entirely if there genuinely isn't one. -->
+
 ## Done criteria
 
 <!-- How to tell the current scope (or a named phase of it) is actually done — specific, falsifiable conditions, not a vibe. If it can't be checked by reading the resulting code/behavior, it isn't specific enough yet. -->

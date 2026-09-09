@@ -24,6 +24,8 @@ filename or from what a similar project usually does.
 
 **Data shape.** <!-- The concrete shape this component reads/writes/exposes. Use a fenced code block for anything structural — never describe a schema or payload in prose when a code block says it exactly. -->
 
+**Dependencies.** <!-- Optional. What this component depends on or is depended on by, only where that detail isn't already obvious from structure.md's system-wide Topology section — component-specific dependency nuance, not a restatement of the global topology. Omit when Topology already covers it. -->
+
 ## `<Next component name>`
 
 ---
