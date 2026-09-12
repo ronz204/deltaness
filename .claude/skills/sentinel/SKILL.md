@@ -42,6 +42,24 @@ For each claim:
   - If this kind of check is going to recur for a slice, say so and suggest the user have `archivist` create a dedicated subagent for it (via its own `agents.template.md`) instead of re-paying full inline cost every time.
 - **Never guess a verdict.** If what was actually read doesn't clearly confirm or contradict a claim, the verdict is `Unverified`, not a best guess in either direction.
 
+### Escalating to execution
+
+A targeted grep confirms a mechanism is *present*; it can't confirm a mechanism *behaves* a certain way under real input. Most invariants are about presence and the grep above settles them — but a claim stated as behavior ("always validates X", "requires auth", "returns 404 if not found") isn't actually checked by finding the word "validate" in the file. Reporting a Holds on that from grep alone would be trading real confirmation for something that only looks like it.
+
+**When it escalates.** All three have to hold — this is an escalation from the targeted grep above, never a first resort:
+
+- The claim is behavioral/testable, not just the presence of a mechanism.
+- The targeted grep was already tried for this specific claim and was inconclusive — it neither confirmed nor contradicted it.
+- An automated test already exists that covers this behavior. If none exists, the verdict stays `Unverified` with the note "no executable check available for this claim" — sentinel never writes a new test just to make a claim checkable; that would be inventing verification, not confirming it.
+
+**How it escalates.** Dispatch a subagent — reuse a matching one from `.claude/agents/` if one already covers this kind of check — scoped to that single claim, never to the whole slice, with tools: Read, Glob, Grep, Bash.
+
+- Its system prompt explicitly forbids editing, installing, or writing any file. Bash is only for running the test command that already exists in the project — the same one CI or the project's manifest uses — and reading its result, never for changing anything.
+- It returns only the command it ran, the pass/fail result, and the relevant fragment of the output — not the full log; that's what keeps this cheaper than pulling the source into the main session directly.
+- If the run fails for a reason unrelated to the claim (a missing env var, broken local setup), the verdict is `Unverified` with that reason. A run that didn't actually exercise what it was meant to test can't be forced into a `Holds` or `Violated` — that would report confidence the check never earned.
+
+**Cost — this is the exception, not the default.** It only triggers when the conditions above are met; it never replaces the targeted grep as the first move, never runs the full test suite (only the specific test or test file tied to the escalated claim), and never changes Step 0's scope — still bounded to the slice(s) already in scope, never a reason to sweep wider on its own.
+
 **When scope spans more than one slice** (a named multi-slice check or a full sweep), do one additional pass after verifying each slice's own claims: compare the Invariants (and, for `design.md`, Interactions/Consumes) already read across those slices — free, since the content is already loaded, no extra reads — for a direct contradiction between two slices' own stated claims on the same domain object. Report only an actual stated contradiction, never an inferred or weak overlap; that becomes a `Conflict` verdict in Step 3.
 
 ## Step 3 — Report, don't fix
@@ -51,6 +69,8 @@ Report as a compact table, not prose per finding — a verbose report defeats a 
 | Slice | Source | Claim | Verdict | Evidence |
 |---|---|---|---|---|
 | `<slice>` | spec / design / plan | `<the claim, restated short>` | Holds / Violated / Stale / Unverified / Gone / Conflict | `<what was actually checked — the pattern found or not found>` |
+
+**Evidence must name its own strength.** State plainly whether a verdict came from Step 2's targeted grep or from an escalated execution run — for an execution-backed verdict, name the command and its pass/fail result, not just "test passed." A reader can't judge how much a `Holds` is worth without knowing which kind of check produced it.
 
 - **Holds** — confirmed true against the real implementation.
 - **Violated** — confirmed false; the implementation exists and contradicts the claim.
@@ -77,6 +97,8 @@ This skill's job ends at the report. What happens next depends on which side is 
 - Doesn't check `.claude/docs/*` or `.claude/rules/*` for drift — scope is a slice's spec, design, and plan only. A broader drift-checker is a different skill, not a reason to stretch this one.
 - Doesn't check a spec's or design's optional Context section — it's free-form theory, not a falsifiable contract, so there's nothing to verify it against.
 - Doesn't write or edit `spec.md`, `design.md`, `plan.md`, or source code — verification only, always handed off.
+- Doesn't write or modify tests to make a claim checkable — an escalated execution check only ever runs a test that already exists; if none exists, the claim stays `Unverified`, not a reason to author one.
+- Doesn't run the full test suite, even when escalating to execution — only the specific test or test file tied to the claim being escalated. Never a default, always tied to a claim the targeted grep already failed to settle.
 - Doesn't sweep every slice in the project by default — see Step 0.
 - Doesn't force a Holds/Violated verdict when the evidence genuinely doesn't settle it — `Unverified` is a legitimate, honest outcome, not a failure to try harder.
 - Doesn't hunt for cross-slice conflicts when scope is a single slice — the `Conflict` check only runs as a free byproduct of a multi-slice sweep already in scope, never triggers pulling in extra slices or extra reads on its own.
