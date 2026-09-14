@@ -1,10 +1,12 @@
 <!--
-Template for services/<service>/deltas/<slice>.spec.md — the living, current
-contract for one project slice/capability's LOGIC layer (data, rules,
-invariants). A slice with a UI-facing surface has a presentation-layer
-counterpart, <slice>.design.md (own template, references/design.template.md)
-— don't fold layout/states/interactions in here, and don't duplicate an
-invariant stated here inside that file either; it should reference this one.
+Template for deltas/<slice>.spec.md (at the project root — or, in a repo
+genuinely split into multiple services, under that service's own
+deltas/<slice>.spec.md) — the living, current contract for one project
+slice/capability's LOGIC layer (data, rules, invariants). A slice with a
+UI-facing surface has a presentation-layer counterpart, <slice>.design.md
+(own template, references/design.template.md) — don't fold
+layout/states/interactions in here, and don't duplicate an invariant stated
+here inside that file either; it should reference this one.
 Edited in place as the slice evolves — this file is always the current
 truth, not a log of how it got there. No append-only history is kept
 alongside it; if a decision needs theory/context beyond what the contract

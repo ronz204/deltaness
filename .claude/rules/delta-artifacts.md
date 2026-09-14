@@ -5,12 +5,13 @@ paths:
   - ".claude/rules/**"
   - ".claude/agents/**"
   - ".claude/skills/**"
-  - "services/**/deltas/**"
+  - "deltas/**"
+  - "*/deltas/**"
 ---
 
 # Delta Knowledge-Base Editing Conventions
 
-These paths are the durable knowledge base this project's delta methodology maintains — `CLAUDE.md`, `.claude/docs/`, `.claude/rules/`, `.claude/agents/`, `.claude/skills/`, and every slice's `spec.md`/`design.md`/`plan.md` under `services/*/deltas/`. They exist to stay grounded and current; editing them ad hoc is exactly the kind of drift the methodology is meant to prevent.
+These paths are the durable knowledge base this project's delta methodology maintains — `CLAUDE.md`, `.claude/docs/`, `.claude/rules/`, `.claude/agents/`, `.claude/skills/`, and every slice's `spec.md`/`design.md`/`plan.md` under `deltas/` at the project root (or, in a repo genuinely split into multiple services, under each service's own `deltas/`). They exist to stay grounded and current; editing them ad hoc is exactly the kind of drift the methodology is meant to prevent.
 
 ---
 

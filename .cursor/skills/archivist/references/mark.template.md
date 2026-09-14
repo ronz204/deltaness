@@ -29,7 +29,10 @@ Table explaining what lives under .cursor/ (and wherever specs live) and
 why — this is the map a session uses to find durable context without
 re-deriving it from the code. List only what actually exists in this
 project; don't include a row for a directory that doesn't exist yet, and
-don't invent a row for a convention this project hasn't adopted.
+don't invent a row for a convention this project hasn't adopted. The
+`deltas/` row below is the default for a project with one root — if this
+repo is genuinely split into multiple independently-deployable services,
+replace it with one row per service's own `<service>/deltas/` instead.
 -->
 
 | Path | Holds |
@@ -37,7 +40,7 @@ don't invent a row for a convention this project hasn't adopted.
 | `.cursor/docs/` | <self-contained reference files, one concern each — e.g. architecture, module reference> |
 | `.cursor/rules/` | <conventions loaded automatically, either always, on a matching file (`globs`), or when the agent judges them relevant (`description`)> |
 | `.cursor/skills/` | <capabilities pulled in across tasks, e.g. this project's own archivist/specifier pair> |
-| `services/<service>/deltas/` | <per-slice spec/design/plan files: `<slice>.spec.md`, optional `<slice>.design.md`, optional `<slice>.plan.md`> |
+| `deltas/` | <per-slice spec/design/plan files: `<slice>.spec.md`, optional `<slice>.design.md`, optional `<slice>.plan.md`> |
 
 ## Repo layout
 

@@ -1,6 +1,6 @@
 ---
 name: surveyor
-description: Use to bootstrap this project's delta knowledge base in a new or existing repo that doesn't have one yet — greenfield or brownfield. Produces CLAUDE.md and the initial .claude/docs/* files in one guided pass by scanning the real repo (or interviewing, if there's nothing to scan yet) and handing the result to archivist to write. Trigger on "inicializa este proyecto con delta", "arranca el harness aquí", "quiero modelar el contexto de este proyecto", "monta la knowledge base", "dale contexto a Claude de este repo", "bootstrap this repo", "set up the delta harness here", "onboard this codebase" — or any request to get a project's context up fast at the start of working on it. Never creates a slice (services/*/deltas/*) — that's specced later, on demand, via specifier. If CLAUDE.md already exists with real content, this isn't the right skill; that's an incremental update through archivist instead.
+description: Use to bootstrap this project's delta knowledge base in a new or existing repo that doesn't have one yet — greenfield or brownfield. Produces CLAUDE.md and the initial .claude/docs/* files in one guided pass by scanning the real repo (or interviewing, if there's nothing to scan yet) and handing the result to archivist to write. Trigger on "inicializa este proyecto con delta", "arranca el harness aquí", "quiero modelar el contexto de este proyecto", "monta la knowledge base", "dale contexto a Claude de este repo", "bootstrap this repo", "set up the delta harness here", "onboard this codebase" — or any request to get a project's context up fast at the start of working on it. Never creates a slice (deltas/*) — that's specced later, on demand, via specifier. If CLAUDE.md already exists with real content, this isn't the right skill; that's an incremental update through archivist instead.
 ---
 
 # Surveyor
@@ -65,7 +65,7 @@ Close by naming, explicitly:
 
 ## Non-goals
 
-- Never creates a `services/*/deltas/*` slice file — bootstrapping a project's context and specifying one of its slices are different jobs; a slice gets specced later, one at a time, via `specifier`.
+- Never creates a `deltas/*` slice file — bootstrapping a project's context and specifying one of its slices are different jobs; a slice gets specced later, one at a time, via `specifier`.
 - Never creates a `.claude/rules/*.md` without the user confirming the pattern is deliberate and worth enforcing every time — unlike `CLAUDE.md`/docs content, a false-positive rule actively injects wrong guidance into every future session that touches a matching file, not just a passive gap.
 - Never overwrites an existing `CLAUDE.md`/`.claude/docs/*` that already has real content without the user confirming a deliberate refresh — see Step 0.
 - Doesn't write `CLAUDE.md` or any doc file itself — always hands off to `archivist`.

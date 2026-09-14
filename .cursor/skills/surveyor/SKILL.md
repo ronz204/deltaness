@@ -1,6 +1,6 @@
 ---
 name: surveyor
-description: Use to bootstrap this project's knowledge base in a new or existing repo that doesn't have one yet — greenfield or brownfield. Produces the always-loaded orientation rule (.cursor/rules/orientation.mdc) and the initial .cursor/docs/* files in one guided pass by scanning the real repo (or interviewing, if there's nothing to scan yet) and handing the result to archivist to write. Trigger on "inicializa este proyecto con delta", "monta la knowledge base", "dale contexto al agente de este repo", "bootstrap this repo", "set up the harness here", "onboard this codebase" — or any request to get a project's context up fast at the start of working on it. Never creates a slice (services/*/deltas/*) — that's specced later, on demand, via specifier. If the orientation rule already exists with real content, this isn't the right skill; that's an incremental update through archivist instead.
+description: Use to bootstrap this project's knowledge base in a new or existing repo that doesn't have one yet — greenfield or brownfield. Produces the always-loaded orientation rule (.cursor/rules/orientation.mdc) and the initial .cursor/docs/* files in one guided pass by scanning the real repo (or interviewing, if there's nothing to scan yet) and handing the result to archivist to write. Trigger on "inicializa este proyecto con delta", "monta la knowledge base", "dale contexto al agente de este repo", "bootstrap this repo", "set up the harness here", "onboard this codebase" — or any request to get a project's context up fast at the start of working on it. Never creates a slice (deltas/*) — that's specced later, on demand, via specifier. If the orientation rule already exists with real content, this isn't the right skill; that's an incremental update through archivist instead.
 ---
 
 # Surveyor
@@ -65,7 +65,7 @@ Close by naming, explicitly:
 
 ## Non-goals
 
-- Never creates a `services/*/deltas/*` slice file — bootstrapping a project's context and specifying one of its slices are different jobs; a slice gets specced later, one at a time, via `specifier`.
+- Never creates a `deltas/*` slice file — bootstrapping a project's context and specifying one of its slices are different jobs; a slice gets specced later, one at a time, via `specifier`.
 - Never creates a `.cursor/rules/*.mdc` without the user confirming the pattern is deliberate and worth enforcing every time — unlike the orientation rule/docs content, a false-positive rule actively injects wrong guidance into every future session that touches a matching file, not just a passive gap.
 - Never overwrites an existing `.cursor/rules/orientation.mdc`/`.cursor/docs/*` that already has real content without the user confirming a deliberate refresh — see Step 0.
 - Doesn't write the orientation rule or any doc file itself — always hands off to `archivist`.
